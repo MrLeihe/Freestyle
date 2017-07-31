@@ -1,6 +1,7 @@
 # Intellij
 *.iml
 .DS_Store
+/captures
 
 #idea files
 /.idea/
@@ -36,5 +37,3 @@
 
 # Keystore files
 *.jks
-app/libs/
-app/src/main/res/drawable/
