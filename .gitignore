@@ -1,7 +1,21 @@
 # Intellij
 *.iml
-.idea
 .DS_Store
+
+#idea files
+/.idea/
+/.idea/copyright/
+/.idea/libraries/
+/.idea/compiler.xml
+/.idea/gradle.xml
+/.idea/runConfigurations.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/vcs.xml
+/.idea/workspace.xml
+/.idea/encodings.xml
+
+#build files
 /build
 /app/build/
 
@@ -22,3 +36,5 @@
 
 # Keystore files
 *.jks
+app/libs/
+app/src/main/res/drawable/
