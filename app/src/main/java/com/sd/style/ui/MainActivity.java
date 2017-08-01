@@ -1,7 +1,9 @@
-package com.sd.style;
+package com.sd.style.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.sd.style.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -4,6 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.multidex.MultiDexApplication;
 
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.FormatStrategy;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
+import com.sd.style.GlobalConstant;
+
 /**
  * @author: SanShi
  * @description: application基类
@@ -19,14 +25,27 @@ public class BaseApplication extends MultiDexApplication{
         super.attachBaseContext(base);
     }
 
+    public static Context getInstance(){
+        return instance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        initConfig();
     }
 
-    public static BaseApplication getInstance(){
-        return instance;
+    private void initConfig() {
+        //初始化日志logger
+        loggerStrategy();
+    }
+
+    private void loggerStrategy() {
+        FormatStrategy strategy = PrettyFormatStrategy.newBuilder()
+                .tag(GlobalConstant.Log.LOG_TAG)
+                .build();
+        Logger.addLogAdapter(new AndroidLogAdapter(strategy));
     }
 
     /**
