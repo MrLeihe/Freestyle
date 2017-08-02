@@ -8,6 +8,7 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
+import com.sd.style.BuildConfig;
 import com.sd.style.GlobalConstant;
 
 /**
@@ -45,7 +46,12 @@ public class BaseApplication extends MultiDexApplication{
         FormatStrategy strategy = PrettyFormatStrategy.newBuilder()
                 .tag(GlobalConstant.Log.LOG_TAG)
                 .build();
-        Logger.addLogAdapter(new AndroidLogAdapter(strategy));
+        Logger.addLogAdapter(new AndroidLogAdapter(strategy){
+            @Override
+            public boolean isLoggable(int priority, String tag) {
+                return BuildConfig.LOG_ON;
+            }
+        });
     }
 
     /**
