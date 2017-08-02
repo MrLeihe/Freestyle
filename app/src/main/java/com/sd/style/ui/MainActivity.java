@@ -1,21 +1,25 @@
 package com.sd.style.ui;
 
-import android.text.TextUtils;
 import android.widget.Button;
 
-import com.orhanobut.logger.Logger;
 import com.sd.style.R;
+import com.sd.style.common.api.ApiRetrofit;
 import com.sd.style.common.base.BaseActivity;
 import com.sd.style.common.base.BasePresenter;
+import com.sd.style.common.http.RequestFactory;
+import com.sd.style.ui.User.response.LoginResponse;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
 
 public class MainActivity extends BaseActivity {
 
@@ -37,7 +41,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @OnClick(R.id.button)
-    public void onClick(){
+    public void onClick() {
         subscribe();
     }
 
@@ -46,46 +50,34 @@ public class MainActivity extends BaseActivity {
         return null;
     }
 
-    private void subscribe(){
-        Observable.create(new ObservableOnSubscribe<String>() {
-            @Override
-            public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Exception {
-                emitter.onNext("大家好");
-                emitter.onNext("你是瓜皮");
-                emitter.onNext("烟花三月下扬州");
-                emitter.onComplete();
-                Logger.e("emitter complete");
-                emitter.onNext("good");
-                Logger.e("emitter good");
-            }
-        }).subscribe(new Observer<String>() {
+    private void subscribe() {
+        Map<String, String> map = new HashMap<>();
 
-            private Disposable mDisposable;
+        Retrofit retrofit = RequestFactory.create();
+        ApiRetrofit apiRetrofit = retrofit.create(ApiRetrofit.class);
+        apiRetrofit.login(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<LoginResponse>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
 
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                Logger.e("onSubscribe");
-                mDisposable = d;
-            }
+                    }
 
-            @Override
-            public void onNext(@NonNull String s) {
-                if(TextUtils.equals(s, "你是瓜皮")) {
-                    mDisposable.dispose();
-                }
-                Logger.e(s);
-            }
+                    @Override
+                    public void onNext(@NonNull LoginResponse loginResponse) {
 
-            @Override
-            public void onError(@NonNull Throwable e) {
-                Logger.e(e, "onError");
-            }
+                    }
 
-            @Override
-            public void onComplete() {
-                Logger.e("onComplete");
-            }
-        });
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        showToast("登录失败");
+                    }
 
+                    @Override
+                    public void onComplete() {
+                        showToast("登陆成功");
+                    }
+                });
     }
 }
