@@ -1,4 +1,4 @@
-package com.sd.style.ui.User.request;
+package com.sd.style.ui.user.request;
 
 /**
  * @author: Rae.Ho
