@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
  * description: activity 基类
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements BaseView{
+public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     /**
-     *
      * @return layout布局id
      */
     protected abstract int getLayoutId();
@@ -48,20 +47,20 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
      */
     protected abstract BasePresenter initPresenter();
 
-    protected void showToast(int toastId){
+    protected void showToast(int toastId) {
         showToast(toastId, Toast.LENGTH_SHORT);
     }
 
-    protected void showToast(int toastId, int duration){
+    protected void showToast(int toastId, int duration) {
         showToast(getString(toastId), duration);
     }
 
-    protected void showToast(String toastContent){
+    protected void showToast(String toastContent) {
         showToast(toastContent, Toast.LENGTH_SHORT);
     }
 
-    protected void showToast(String toastContent, int duration){
-        if(TextUtils.isEmpty(toastContent)) {
+    protected void showToast(String toastContent, int duration) {
+        if (TextUtils.isEmpty(toastContent)) {
             return;
         }
         Toast.makeText(this, toastContent, duration).show();
