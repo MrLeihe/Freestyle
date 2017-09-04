@@ -14,11 +14,17 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+
     }
 
     @Override
     protected void bindData() {
+        //mergeSort();
+        //selectSort();
+        //bubbleSort();
     }
+
+
 
     @Override
     protected BasePresenter initPresenter() {
