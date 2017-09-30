@@ -3,7 +3,12 @@ package com.sd.style.common.base;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.orhanobut.logger.Logger;
+import com.sd.style.GlobalConstant;
 
 import butterknife.ButterKnife;
 
@@ -17,10 +22,22 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
+        initScreenConfig();
         initConfig();
         initView();
         bindData();
         initPresenter();
+    }
+
+    private void initScreenConfig() {
+        WindowManager manager = this.getWindowManager();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(outMetrics);
+        int width = outMetrics.widthPixels;
+        int height = outMetrics.heightPixels;
+        Logger.e("base---height:" + height);
+        GlobalConstant.screen.screenWidth = width;
+        GlobalConstant.screen.screenHeight = height;
     }
 
     private void initConfig() {

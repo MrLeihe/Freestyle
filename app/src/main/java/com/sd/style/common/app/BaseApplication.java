@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.multidex.MultiDexApplication;
 
+import com.facebook.stetho.Stetho;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
@@ -35,6 +36,8 @@ public class BaseApplication extends MultiDexApplication{
         super.onCreate();
         instance = this;
         initConfig();
+        //数据库调试
+        Stetho.initializeWithDefaults(this);
     }
 
     private void initConfig() {

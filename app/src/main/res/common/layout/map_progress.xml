@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="wrap_content"
+             android:layout_height="match_parent"
+             android:background="@drawable/map_progress_outside_shape">
+
+    <ProgressBar
+        android:id="@+id/run_progressbar"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:indeterminateOnly="false"
+        android:max="100"
+        android:progress="60"
+        android:progressDrawable="@drawable/progress_vertical"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_scale"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/tv_progress_max"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp"
+        android:text="¥50"
+        android:textColor="#7F7F7F"
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/tv_progress_min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="2dp"
+        android:text="0"
+        android:textColor="@color/white"
+        android:textSize="14sp"/>
+
+</FrameLayout>

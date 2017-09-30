@@ -12,4 +12,9 @@ public class GlobalConstant {
 
         public static String LOG_TAG = "style";
     }
+
+    public static class screen{
+        public static int screenWidth;
+        public static int screenHeight;
+    }
 }

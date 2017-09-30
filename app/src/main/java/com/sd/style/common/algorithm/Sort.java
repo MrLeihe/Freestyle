@@ -12,6 +12,26 @@ import com.orhanobut.logger.Logger;
 public class Sort {
 
     /**
+     * 二分查找
+     */
+    public static int binarySearch(int[] array, int number){
+        int low = 0;
+        int high = array.length;
+        int middle;
+        while(low <= high) {
+            middle = (low + high)/2;
+            if(array[middle] == number) {
+                return middle;
+            }else if(array[middle] < number) {
+                low = middle + 1;
+            }else if(array[middle] > number) {
+                high = middle - 1;
+            }
+        }
+        return -1;
+    }
+
+    /**
      * 字符串递归反转
      */
     private String reverse(String str) {
@@ -105,7 +125,7 @@ public class Sort {
             sort[k++]= one[i++];
         }
 
-        while (j < one.length) {
+        while (j < two.length) {
             sort[k++] = two[j++];
         }
 
