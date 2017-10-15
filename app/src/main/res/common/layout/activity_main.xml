@@ -1,61 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.sd.style.ui.MainActivity">
 
-    <ImageView
-        android:id="@+id/iv_assets"
-        android:visibility="gone"
-        android:layout_width="100dp"
-        android:layout_height="100dp"/>
+
+    <android.support.v4.widget.DrawerLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/main_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </FrameLayout>
+
+        <include layout="@layout/draw_content_layout"/>
+
+    </android.support.v4.widget.DrawerLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="60dp"
+        android:background="@drawable/home_bottom_bg"
+        android:layout_alignParentBottom="true">
 
-        <Button
-            android:id="@+id/btn_start"
-            android:text="开启服务"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:id="@+id/ll_switch_home"
+            style="@style/main_switch_layout">
 
-        <Button
-            android:id="@+id/btn_invoke"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="调用服务方法"/>
+            <ImageView
+                android:id="@+id/iv_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/home_checked"/>
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_home"
+                style="@style/main_switch_text"
+                android:text="@string/switch_home"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/combined_shape_new"
+        <LinearLayout
+            android:id="@+id/ll_switch_income"
+            style="@style/main_switch_layout">
+
+            <ImageView
+                android:id="@+id/iv_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/earing_unchecked"/>
+
+            <TextView
+                android:id="@+id/tv_income"
+                style="@style/main_switch_text"
+                android:text="@string/switch_income"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_switch_run"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:paddingBottom="2dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="10dp"
-            android:paddingTop="2dp"
-            android:text="¥200.80"
-            android:textColor="#fff"
-            android:textSize="9sp"
-            android:visibility="visible"/>
+            android:orientation="vertical">
 
-        <com.sd.style.common.widget.MapProgressView
-            android:id="@+id/map_progressbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/iv_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/home_start"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_switch_market"
+            style="@style/main_switch_layout">
+
+            <ImageView
+                android:id="@+id/iv_market"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ad_market_dark"/>
+
+            <TextView
+                android:id="@+id/tv_market"
+                style="@style/main_switch_text"
+                android:text="@string/switch_market"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_switch_mine"
+            style="@style/main_switch_layout">
+
+            <ImageView
+                android:id="@+id/iv_mine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/user_unchecked"/>
+
+            <TextView
+                android:id="@+id/tv_mine"
+                style="@style/main_switch_text"
+                android:text="@string/switch_mine"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-
-</LinearLayout>
+</RelativeLayout>

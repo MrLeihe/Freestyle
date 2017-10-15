@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">style</string>
+    <string name="switch_home">首页</string>
+    <string name="switch_income">收入</string>
+    <string name="switch_market">市场</string>
+    <string name="switch_mine">我的</string>
 </resources>
