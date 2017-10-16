@@ -1,6 +1,8 @@
 package com.sd.style.common.widget;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,14 +12,20 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.orhanobut.logger.Logger;
 import com.sd.style.R;
 import com.sd.style.common.uitls.UIUtils;
+import com.sd.style.common.uitls.Utils;
 
 
 /**
  * Created by Administrator on 2016/12/20.
  */
 public class InsideCircle extends View {
+
+    public static final int Start_Degree = 155;
+    public static final int Total_Degree = 230;
+    private Bitmap mCarBitmap;
 
     public InsideCircle(Context context) {
         super(context);
@@ -44,9 +52,13 @@ public class InsideCircle extends View {
     private Paint strokePaint;//进度条画笔
     private Paint textPaint;//绘制文字的画笔
     private Paint circlePaint;//绘制圆点的画笔
+    private Paint bitmapPaint;//绘制汽车的画笔
+    private Paint kmPaint;
     private int strokeWidth = dip2px(10);//进度条宽度
     private float total;//总进度
     private float progress;//当前进度
+    private int minDistance;//最小距离
+    private int maxDistance;//最大距离
 
     public double getTotal() {
         return total;
@@ -63,6 +75,15 @@ public class InsideCircle extends View {
     public void setProgress(float progress) {
         this.progress = progress;
     }
+
+    public void setMinDistance(int minDistance) {
+        this.minDistance = minDistance;
+    }
+
+    public void setMaxDistance(int maxDistance) {
+        this.maxDistance = maxDistance;
+    }
+
 
     private void init() {
         strokePaint = new Paint();
@@ -82,31 +103,41 @@ public class InsideCircle extends View {
         circlePaint.setAntiAlias(true);
         circlePaint.setStyle(Paint.Style.FILL);
         circlePaint.setColor(Color.WHITE);
+
+        bitmapPaint = new Paint();
+        bitmapPaint.setStyle(Paint.Style.FILL);
+        bitmapPaint.setFilterBitmap(true);
+        bitmapPaint.setDither(true);
+        mCarBitmap = BitmapFactory.decodeResource(Utils.getContext().getResources(), R.mipmap.car);
+
+        kmPaint = new Paint();
+        kmPaint.setAntiAlias(true);
+        kmPaint.setStyle(Paint.Style.FILL);
+        kmPaint.setColor(Color.WHITE);
     }
 
     private Rect bounds = new Rect();
     private RectF mArcRect = new RectF();
     private int imageWidth = 80;
+
     @Override
     protected void onDraw(Canvas canvas) {
         //获取绘制区域
         getDrawingRect(bounds);
+        Logger.e("width------" + bounds.width() + "---height-----" + bounds.height());
         int size = bounds.height() > bounds.width() ? bounds.width() : bounds.height();
-//        //计算外部圆半径
+        //计算外部圆半径
         float outerRadius = (size - strokeWidth) / 2f;
         int padding = (imageWidth - strokeWidth) / 2;
-//        //中心圆直径
-        float centerRadius = outerRadius - strokeWidth / 2f-padding/2;
-//        float horizontalPadding = strokeWidth + (bounds.width() - size) / 2f;
-//        float verticalPadding = strokeWidth + (bounds.height() - size) / 2f;
+        //中心圆直径
+        float centerRadius = outerRadius - strokeWidth / 2f - padding / 2;
         float horizontalPadding = padding + strokeWidth / 2 + (bounds.width() - size) / 2f;
         float verticalPadding = padding + strokeWidth / 2 + (bounds.height() - size) / 2f;
-//        Log.e("TAG", "left:" + bounds.left + ",top:" + bounds.top + ",right:" + bounds.right + ",bottom:" + bounds.bottom);
         mArcRect.set(bounds.left + horizontalPadding, bounds.top + verticalPadding,
                 bounds.right - horizontalPadding, bounds.bottom - verticalPadding);
         //绘制进度条背景
         strokePaint.setColor(Color.parseColor("#55ffffff"));
-        canvas.drawArc(mArcRect, 165, 210, false, strokePaint);
+        canvas.drawArc(mArcRect, Start_Degree, Total_Degree, false, strokePaint);
 
         //绘制进度条
         //计算进度条百分比
@@ -114,27 +145,16 @@ public class InsideCircle extends View {
         if (total > 0) {
             proportion = progress / total;
         }
+        //130,280
         if (proportion > 0) {
             strokePaint.setColor(Color.parseColor("#ffffff"));
-            canvas.drawArc(mArcRect, 130, 280 * proportion, false, strokePaint);
+            canvas.drawArc(mArcRect, Start_Degree, Total_Degree * proportion, false, strokePaint);
             //在终点绘制圆
             float angle = 280 * proportion - 140;
             float circleX = (float) (centerRadius * Math.sin(Math.toRadians(angle)) + bounds.width() / 2);
             float circleY = (float) (bounds.height() / 2 - centerRadius * Math.cos(Math.toRadians(angle)));
             canvas.drawCircle(circleX, circleY, strokeWidth, circlePaint);
         }
-
-
-        //绘制底部文字
-        textPaint.setTypeface(Typeface.DEFAULT);
-        textPaint.setTextSize(dip2px(13));
-        String content = getContext().getResources().getString(R.string.total) + String.format("%.2f", total) + " " + getContext().getResources().getString(R.string.yuan);
-        //计算字的宽和高
-        Rect rect = new Rect();
-        textPaint.getTextBounds(content, 0, content.length(), rect);
-        float textX = bounds.centerX() - rect.width() / 2;
-        float textY = (float) (bounds.centerY() + centerRadius * Math.cos(Math.toRadians(40)) + rect.height() / 2);
-        canvas.drawText(content, textX, textY, textPaint);
 
         //绘制价格
         textPaint.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/DINCond-Black.otf"));
@@ -151,7 +171,29 @@ public class InsideCircle extends View {
         Rect topRect = new Rect();
         textPaint.getTextBounds(topContent, 0, topContent.length(), topRect);
         float toptextX = bounds.centerX() - topRect.width() / 2;
-        float toptextY = (float) (bounds.centerY() - UIUtils.dp2px(36)- UIUtils.dp2px(5));
+        float toptextY = (float) (bounds.centerY() - UIUtils.dp2px(36) - UIUtils.dp2px(5));
         canvas.drawText(topContent, toptextX, toptextY, textPaint);
+
+        //画车
+        float carX = bounds.centerX() - mCarBitmap.getWidth() / 2;
+        float carY = (float) (bounds.centerY() + centerRadius * Math.sin(Math.toRadians(25)));
+        canvas.drawBitmap(mCarBitmap, carX, carY, bitmapPaint);
+
+        //画底部距离文字
+        kmPaint.setTextSize(dip2px(8));
+        String minKmContent = minDistance + " km";
+        Rect distanceRect = new Rect();
+        kmPaint.getTextBounds(minKmContent, 0, minKmContent.length(), distanceRect);
+        float minKmX = (float) (bounds.centerX() - centerRadius * Math.cos(Math.toRadians(25)) - distanceRect.width() / 2 + strokeWidth / 2);
+        float minKmY = (float) (bounds.centerY() + centerRadius * Math.sin(Math.toRadians(25)) + distanceRect.height() * 2.5);
+        canvas.drawText(minKmContent, minKmX, minKmY, kmPaint);
+
+        maxDistance = 500;
+        String maxKmContent = maxDistance + " km";
+        kmPaint.getTextBounds(maxKmContent, 0, maxKmContent.length(), distanceRect);
+        float maxKmX = (float) (bounds.centerX() + centerRadius * Math.cos(Math.toRadians(25)) - distanceRect.width() / 2 - strokeWidth / 2);
+        float maxKmY = (float) (bounds.centerY() + centerRadius * Math.sin(Math.toRadians(25)) + distanceRect.height() * 2.5);
+        canvas.drawText(maxKmContent, maxKmX, maxKmY, kmPaint);
     }
+
 }
