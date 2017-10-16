@@ -1,6 +1,6 @@
 package com.sd.style.common.api;
 
-import com.sd.style.ui.user.response.LoginResponse;
+import com.sd.style.module.user.response.LoginResponse;
 
 import java.util.Map;
 

@@ -1,5 +1,6 @@
 package com.sd.style.common.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,11 +20,12 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment implements BaseView{
 
     private Unbinder mUnbinder;
+    private Context mContext;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = getLayoutId();
+        View view = LayoutInflater.from(mContext).inflate(getLayoutId(), container, false);
         mUnbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -31,15 +33,24 @@ public abstract class BaseFragment extends Fragment implements BaseView{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initView();
         bindData();
         initPresenter();
     }
 
-    protected abstract View getLayoutId();
+    protected abstract int getLayoutId();
+
+    protected abstract void initView();
 
     protected abstract void bindData();
 
     protected abstract BasePresenter initPresenter();
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mContext = context;
+    }
 
     @Override
     public void onDestroyView() {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sd.style.ui.MainActivity">
+    tools:context="com.sd.style.module.MainActivity">
 
 
     <android.support.v4.widget.DrawerLayout
@@ -33,9 +33,7 @@
 
             <ImageView
                 android:id="@+id/iv_home"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                style="@style/main_switch_image"
                 android:src="@drawable/home_checked"/>
 
             <TextView
@@ -51,8 +49,7 @@
 
             <ImageView
                 android:id="@+id/iv_income"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/main_switch_image"
                 android:src="@drawable/earing_unchecked"/>
 
             <TextView
@@ -62,21 +59,27 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_switch_run"
+        <RelativeLayout
+            android:id="@+id/rl_switch_run"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_run_stroke"
+                android:layout_centerInParent="true"
+                android:src="@drawable/home_unstart_stroke"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <ImageView
                 android:id="@+id/iv_run"
+                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/home_start"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/ll_switch_market"
@@ -84,8 +87,7 @@
 
             <ImageView
                 android:id="@+id/iv_market"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/main_switch_image"
                 android:src="@drawable/ad_market_dark"/>
 
             <TextView
@@ -101,8 +103,7 @@
 
             <ImageView
                 android:id="@+id/iv_mine"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/main_switch_image"
                 android:src="@drawable/user_unchecked"/>
 
             <TextView

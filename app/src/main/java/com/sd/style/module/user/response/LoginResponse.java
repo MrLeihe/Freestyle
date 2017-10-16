@@ -1,4 +1,4 @@
-package com.sd.style.ui.user.response;
+package com.sd.style.module.user.response;
 
 /**
  * @author: Rae.Ho

@@ -1,4 +1,4 @@
-package com.sd.style.ui;
+package com.sd.style.module;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;

@@ -1,4 +1,4 @@
-package com.sd.style.ui.home.Contract;
+package com.sd.style.module.home.contract;
 
 import com.sd.style.common.base.BasePresenter;
 import com.sd.style.common.base.BaseView;

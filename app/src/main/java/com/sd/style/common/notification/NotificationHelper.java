@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.os.Build;
 
 import com.sd.style.R;
-import com.sd.style.ui.TestActivity;
+import com.sd.style.module.TestActivity;
 
 
 /**
