@@ -11,4 +11,5 @@
     <string name="yuan"> 元</string>
     <string name="current">当前收益 (元)</string>
     <string name="today">今日收益 (元)</string>
+    <string name="km_placeholder">%1$d km</string>
 </resources>

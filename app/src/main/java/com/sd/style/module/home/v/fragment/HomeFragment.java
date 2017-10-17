@@ -3,7 +3,7 @@ package com.sd.style.module.home.v.fragment;
 import com.sd.style.R;
 import com.sd.style.common.base.BaseFragment;
 import com.sd.style.common.base.BasePresenter;
-import com.sd.style.common.widget.InsideCircle;
+import com.sd.style.common.widget.HomeCircleView;
 
 import butterknife.BindView;
 
@@ -14,7 +14,7 @@ import butterknife.BindView;
 public class HomeFragment extends BaseFragment{
 
     @BindView(R.id.inside_circle)
-    InsideCircle inside_circle;
+    HomeCircleView inside_circle;
 
     public static HomeFragment newInstance(){
         return new HomeFragment();
@@ -32,7 +32,11 @@ public class HomeFragment extends BaseFragment{
 
     @Override
     protected void bindData() {
-        inside_circle.setProgress(0, 80);
+        inside_circle.setMinDistance(0);
+        inside_circle.setMaxDistance(500);
+        inside_circle.setProgress(80);
+        inside_circle.setTotal(100);
+        inside_circle.start();
     }
 
     @Override
