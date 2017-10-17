@@ -1,6 +1,5 @@
 package com.sd.style.module.home.v.fragment;
 
-import com.orhanobut.logger.Logger;
 import com.sd.style.R;
 import com.sd.style.common.base.BaseFragment;
 import com.sd.style.common.base.BasePresenter;
@@ -33,11 +32,7 @@ public class HomeFragment extends BaseFragment{
 
     @Override
     protected void bindData() {
-        double x = 5.0 / 13;
-        double asin = Math.asin(x);
-        Logger.e("x-----" + x + "---asin----------" + asin);
-        double degrees = Math.toDegrees(asin);
-        Logger.e("degrees--------" + degrees);
+        inside_circle.setProgress(0, 80);
     }
 
     @Override

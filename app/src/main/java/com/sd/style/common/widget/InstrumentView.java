@@ -343,7 +343,6 @@ public class InstrumentView extends View {
 
         canvas.drawArc(rectF, angle + 80, 100, true, mPaint);
 
-
     }
 
     private void drawIndicatorBg(Canvas canvas) {
