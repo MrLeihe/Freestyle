@@ -7,5 +7,6 @@
 
     <color name="theme_color">#FF555c</color>
     <color name="theme_gray_color">#959595</color>
+    <color name="black">#000000</color>
 
 </resources>

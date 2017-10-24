@@ -5,6 +5,12 @@
               android:background="@drawable/home_inside_bg"
               android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/finger_test"
+        android:text="指纹识别"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <RelativeLayout
         android:layout_marginTop="25dp"
         android:layout_marginLeft="25dp"

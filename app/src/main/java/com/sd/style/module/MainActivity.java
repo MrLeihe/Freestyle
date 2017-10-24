@@ -1,5 +1,6 @@
 package com.sd.style.module;
 
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,10 +11,11 @@ import com.sd.style.R;
 import com.sd.style.common.base.BaseActivity;
 import com.sd.style.common.base.BasePresenter;
 import com.sd.style.module.home.v.fragment.HomeFragment;
+import com.sd.style.module.mine.v.fragment.MineFragment;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.main_container)
     FrameLayout main_container;
@@ -55,11 +57,16 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        ll_switch_home.setOnClickListener(this);
+        ll_switch_income.setOnClickListener(this);
+        ll_switch_market.setOnClickListener(this);
+        ll_switch_mine.setOnClickListener(this);
+        rl_switch_run.setOnClickListener(this);
     }
 
     @Override
     protected void bindData() {
-        getSupportFragmentManager().beginTransaction().add(R.id.main_container, HomeFragment.newInstance()).commitAllowingStateLoss();
+
     }
 
     @Override
@@ -70,5 +77,43 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private HomeFragment homeFragment;
+    private MineFragment mineFragment;
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_switch_home:
+                switchHome();
+                break;
+            case R.id.ll_switch_income:
+
+                break;
+            case R.id.ll_switch_market:
+
+                break;
+            case R.id.ll_switch_mine:
+                switchMine();
+                break;
+            case R.id.rl_switch_run:
+
+                break;
+        }
+    }
+
+    private void switchMine() {
+        if(mineFragment == null) {
+            mineFragment = MineFragment.newInstance();
+        }
+        switchFragment(R.id.main_container, currentFragment, mineFragment);
+    }
+
+    private void switchHome() {
+        if(homeFragment == null) {
+            homeFragment = HomeFragment.newInstance();
+        }
+        switchFragment(R.id.main_container, currentFragment, homeFragment);
     }
 }

@@ -20,7 +20,7 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment implements BaseView{
 
     private Unbinder mUnbinder;
-    private Context mContext;
+    protected Context mContext;
 
     @Nullable
     @Override

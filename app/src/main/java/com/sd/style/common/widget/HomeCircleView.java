@@ -17,7 +17,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import com.orhanobut.logger.Logger;
 import com.sd.style.R;
 import com.sd.style.common.uitls.UIUtils;
 import com.sd.style.common.uitls.Utils;
@@ -159,7 +158,6 @@ public class HomeCircleView extends View {
     protected void onDraw(Canvas canvas) {
         //获取绘制区域
         getDrawingRect(bounds);
-        Logger.e("width------" + bounds.width() + "---height-----" + bounds.height());
         int size = bounds.height() > bounds.width() ? bounds.width() : bounds.height();
         //计算外部圆半径
         outerRadius = (size - strokeWidth) / 2f;
@@ -179,7 +177,6 @@ public class HomeCircleView extends View {
         //画底部距离文字
         drawDistance(canvas);
         //画圆点
-        Logger.e("outerRadius-----" + outerRadius + "----centerRadius---" + centerRadius);
         drawPoint(canvas);
         //画指针
         drawFinger(canvas);
@@ -298,7 +295,6 @@ public class HomeCircleView extends View {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    Logger.e("onAnimationEnd----------------------->");
                     if (total > 0) {
                         float current = progress / total;
                         if (current > 1) {
@@ -340,7 +336,6 @@ public class HomeCircleView extends View {
                     currentPercent = (float) animation.getAnimatedValue();
                     currentAngle = currentPercent * Total_Degree;
                     //计算指针的坐标
-                    Logger.e("currentAngle-----------" + currentAngle);
                     point.x = (float) (bounds.centerX() - outerRadius * Math.sin(Math.toRadians(Base_Degree + currentAngle)));
                     point.y = (float) (bounds.centerY() + outerRadius * Math.cos(Math.toRadians(Base_Degree + currentAngle)));
                     //进度重绘
