@@ -78,19 +78,15 @@ public class HomeCircleView extends View {
     private Bitmap fingerBitmap;
     private PointF point;
 
-    public float getProgress() {
-        return progress;
-    }
-
     public void setProgress(float progress) {
         this.progress = progress;
     }
 
-    public void setTotal(float total){
+    public void setTotal(float total) {
         this.total = total;
     }
 
-    public void start(){
+    public void start() {
         startProgressBgAnimation();
         requestLayout();
     }
@@ -261,7 +257,7 @@ public class HomeCircleView extends View {
         matrix.postRotate(Base_Degree + currentAngle + 180, bounds.centerX(), bounds.centerY());
         Bitmap bitmap = Bitmap.createBitmap(fingerBitmap, 0, 0, fingerBitmap.getWidth(),
                 fingerBitmap.getHeight(), matrix, true);
-        canvas.drawBitmap(bitmap, point.x - bitmap.getWidth()/2, point.y - bitmap.getHeight(), bitmapPaint);
+        canvas.drawBitmap(bitmap, point.x - bitmap.getWidth() / 2, point.y - bitmap.getHeight(), bitmapPaint);
     }
 
     private float currentAngle;
@@ -278,13 +274,9 @@ public class HomeCircleView extends View {
             valueAnimator.setDuration(1200);
             valueAnimator.setStartDelay(200);
             valueAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    animationUpdate = (float) animation.getAnimatedValue();
-                    invalidate();
-                }
-
+            valueAnimator.addUpdateListener(animation -> {
+                animationUpdate = (float) animation.getAnimatedValue();
+                invalidate();
             });
 
             valueAnimator.addListener(new Animator.AnimatorListener() {
@@ -330,17 +322,14 @@ public class HomeCircleView extends View {
         if (fingerValueAnimator == null) {
             fingerValueAnimator = ValueAnimator.ofFloat(start, end);
             fingerValueAnimator.setDuration(2000);
-            fingerValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    currentPercent = (float) animation.getAnimatedValue();
-                    currentAngle = currentPercent * Total_Degree;
-                    //计算指针的坐标
-                    point.x = (float) (bounds.centerX() - outerRadius * Math.sin(Math.toRadians(Base_Degree + currentAngle)));
-                    point.y = (float) (bounds.centerY() + outerRadius * Math.cos(Math.toRadians(Base_Degree + currentAngle)));
-                    //进度重绘
-                    invalidate();
-                }
+            fingerValueAnimator.addUpdateListener(animation -> {
+                currentPercent = (float) animation.getAnimatedValue();
+                currentAngle = currentPercent * Total_Degree;
+                //计算指针的坐标
+                point.x = (float) (bounds.centerX() - outerRadius * Math.sin(Math.toRadians(Base_Degree + currentAngle)));
+                point.y = (float) (bounds.centerY() + outerRadius * Math.cos(Math.toRadians(Base_Degree + currentAngle)));
+                //进度重绘
+                invalidate();
             });
         }
         if (!fingerValueAnimator.isRunning()) {
