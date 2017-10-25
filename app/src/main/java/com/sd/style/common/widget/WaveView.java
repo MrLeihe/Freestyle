@@ -1,6 +1,7 @@
 package com.sd.style.common.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -12,7 +13,8 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
-import com.orhanobut.logger.Logger;
+import com.facebook.stetho.common.LogUtil;
+import com.sd.style.R;
 import com.sd.style.common.uitls.ContextCompactUtils;
 
 import java.util.ArrayList;
@@ -52,12 +54,43 @@ public class WaveView extends View {
 
     public WaveView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.WaveView);
+        attributes.recycle();
         init();
     }
 
     private void init() {
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        LogUtil.e("modeWidth--->" + widthMode + "--sizeWidth--->"  + widthSize);
+        LogUtil.e("modeHeight--->" + heightMode + "--sizeHeight--->"  + heightSize);
+        int width;
+        int height;
+        if(widthMode == MeasureSpec.EXACTLY) {
+            width = widthSize;
+        } else if (widthMode == MeasureSpec.AT_MOST) {
+            width = Math.min((int) maxWaveRadius * 2, widthSize);
+        } else {
+            width = (int) (maxWaveRadius * 2);
+        }
+
+        if(heightMode == MeasureSpec.EXACTLY) {
+            height = heightSize;
+        } else if (heightMode == MeasureSpec.AT_MOST) {
+            height = Math.min((int) maxWaveRadius * 2, heightSize);
+        } else {
+            height = (int) maxWaveRadius * 2;
+        }
+        setMeasuredDimension(width, height);
     }
 
     @Override
@@ -80,7 +113,6 @@ public class WaveView extends View {
                 paint.setAlpha(circle.getAlpha());
                 int width = getWidth() / 2;
                 int centerX = bounds.centerX();
-                Logger.e("width---------->" + width + "---centerX-------->" + centerX);
                 canvas.drawCircle(getWidth() / 2, getHeight() / 2, circle.getWaveRadius(), paint);
             } else {
                 iterator.remove();

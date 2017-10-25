@@ -3,6 +3,7 @@ package com.sd.style.module.mine.v.fragment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+import android.widget.TextView;
 
 import com.sd.style.R;
 import com.sd.style.common.base.BaseFragment;
@@ -23,6 +24,9 @@ public class MineFragment extends BaseFragment {
     SaleProgressView sale_view;
     @BindView(R.id.wave_view)
     WaveView wave_view;
+    @BindView(R.id.tv_pause_wave)
+    TextView tv_pause_wave;
+    private boolean isRunning;
 
     public static MineFragment newInstance() {
         return new MineFragment();
@@ -35,7 +39,17 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
+        tv_pause_wave.setOnClickListener(v -> {
+            if (isRunning) {
+                wave_view.pause();
+                isRunning = false;
+                tv_pause_wave.setText("开始");
+            } else {
+                wave_view.start();
+                isRunning = true;
+                tv_pause_wave.setText("暂停");
+            }
+        });
     }
 
     @Override
@@ -47,6 +61,7 @@ public class MineFragment extends BaseFragment {
         wave_view.setInterpolator(new LinearOutSlowInInterpolator());
         wave_view.setColor(R.color.theme_color);
         wave_view.start();
+        isRunning = true;
     }
 
     private int progress;
