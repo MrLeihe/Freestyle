@@ -12,6 +12,13 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk{
+            //使用stl标准库
+            stl "stlport_static"
+            //加入Android的日志库
+            ldLibs "log"
+        }
     }
 
     buildTypes {

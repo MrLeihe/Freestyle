@@ -55,4 +55,10 @@ public class MineFragment extends BaseFragment {
         return null;
     }
 
+    static {
+        System.loadLibrary("hello_jni");
+    }
+
+    public native String getFromUri();
+
 }
