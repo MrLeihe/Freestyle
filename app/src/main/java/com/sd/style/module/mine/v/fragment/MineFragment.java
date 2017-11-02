@@ -2,11 +2,15 @@ package com.sd.style.module.mine.v.fragment;
 
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
+import android.widget.TextView;
 
 import com.sd.style.R;
 import com.sd.style.common.base.BaseFragment;
 import com.sd.style.common.base.BasePresenter;
+import com.sd.style.common.uitls.UIUtils;
 import com.sd.style.common.widget.SaleProgressView;
+import com.sd.style.common.widget.WaveView;
 
 import butterknife.BindView;
 
@@ -18,6 +22,20 @@ public class MineFragment extends BaseFragment {
 
     @BindView(R.id.sale_view)
     SaleProgressView sale_view;
+    @BindView(R.id.wave_view)
+    WaveView wave_view;
+    @BindView(R.id.tv_pause_wave)
+    TextView tv_pause_wave;
+    @BindView(R.id.tv_jni_test)
+    TextView tv_jni_test;
+
+    private boolean isRunning;
+
+    static {
+        System.loadLibrary("hello_jni");
+    }
+
+    public native String getFromUri();
 
     public static MineFragment newInstance() {
         return new MineFragment();
@@ -30,12 +48,34 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        tv_pause_wave.setOnClickListener(v -> {
+            if (isRunning) {
+                wave_view.pause();
+                isRunning = false;
+                tv_pause_wave.setText("开始");
+            } else {
+                wave_view.start();
+                isRunning = true;
+                tv_pause_wave.setText("暂停");
+            }
+        });
 
+        tv_jni_test.setOnClickListener(v -> {
+            String fromUri = getFromUri();
+            tv_jni_test.setText(fromUri);
+        });
     }
 
     @Override
     protected void bindData() {
-        handler.sendEmptyMessageDelayed(0, 100);
+        handler.sendEmptyMessage(0);
+        wave_view.setDuration(2000);
+        wave_view.setMinWaveRadius(UIUtils.dp2px(1));
+        wave_view.setMaxWaveRadius(UIUtils.dp2px(50));
+        wave_view.setInterpolator(new LinearOutSlowInInterpolator());
+        wave_view.setColor(R.color.theme_color);
+        wave_view.start();
+        isRunning = true;
     }
 
     private int progress;
@@ -55,10 +95,21 @@ public class MineFragment extends BaseFragment {
         return null;
     }
 
-    static {
-        System.loadLibrary("hello_jni");
+    @Override
+    public void onResume() {
+        super.onResume();
+        wave_view.start();
     }
 
-    public native String getFromUri();
+    @Override
+    public void onPause() {
+        super.onPause();
+        wave_view.pause();
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        wave_view.destroy();
+    }
 }

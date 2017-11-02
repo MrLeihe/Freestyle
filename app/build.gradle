@@ -14,6 +14,8 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk{
+            // 模块名称，即编译的.so文件名
+            moduleName "hello_jni"
             //使用stl标准库
             stl "stlport_static"
             //加入Android的日志库
@@ -53,6 +55,8 @@ android {
                             'src/main/res/micro',
                             'src/main/res/mine'
                     ]//res 目录的拆分
+            //jni
+            jniLibs.srcDirs = ['libs']
         }
     }
 }

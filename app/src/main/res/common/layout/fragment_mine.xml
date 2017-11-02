@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:gravity="center"
-              android:background="@color/theme_gray_color"
+              xmlns:helei="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <com.sd.style.common.widget.SaleProgressView
         android:id="@+id/sale_view"
         android:layout_width="200dp"
         android:layout_height="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_jni_test"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:text="jni"
+        android:layout_width="wrap_content"
+        android:minWidth="100dp"
+        android:layout_height="40dp"/>
+
+    <com.sd.style.common.widget.WaveView
+        android:id="@+id/wave_view"
+        helei:duration="3000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tv_pause_wave"
+        android:text="暂停"
+        android:gravity="center"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"/>
+
+    <com.sd.style.common.widget.PathView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
