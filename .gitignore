@@ -5,15 +5,6 @@
 
 #idea files
 /.idea/
-/.idea/copyright/
-/.idea/libraries/
-/.idea/compiler.xml
-/.idea/gradle.xml
-/.idea/runConfigurations.xml
-/.idea/misc.xml
-/.idea/modules.xml
-/.idea/vcs.xml
-/.idea/workspace.xml
 /.idea/encodings.xml
 
 #build files
@@ -34,6 +25,3 @@
 
 # Log Files
 *.log
-
-# Keystore files
-*.jks

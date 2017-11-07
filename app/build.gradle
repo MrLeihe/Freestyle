@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
@@ -14,15 +15,37 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    //签名
+    signingConfigs {
+        debug {
+        }
+        relealse {
+            storeFile file("../app/freeStyle.jks")
+            storePassword "123456"
+            keyAlias "freeStyle"
+            keyPassword "123456"
+        }
+    }
+
     buildTypes {
         release {
             buildConfigField("boolean", "LOG_ON", "true");
-            minifyEnabled false
+            //混淆
+            minifyEnabled true
+            //Zipalign优化
+            zipAlignEnabled true
+            //移除无用的resource文件
+            shrinkResources true
+            //前面是系统默认的混淆规则
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //签名
+            signingConfig signingConfigs.relealse
         }
 
         debug {
             buildConfigField("boolean", "LOG_ON", "true");
+            //签名
+            signingConfig signingConfigs.relealse
         }
     }
 
@@ -62,4 +85,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.facebook.stetho:stetho:1.4.2'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

@@ -21,13 +21,14 @@ public abstract class BaseFragment extends Fragment implements BaseView{
 
     private Unbinder mUnbinder;
     protected Context mContext;
+    protected View rootView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(mContext).inflate(getLayoutId(), container, false);
-        mUnbinder = ButterKnife.bind(this, view);
-        return view;
+        rootView = LayoutInflater.from(mContext).inflate(getLayoutId(), container, false);
+        mUnbinder = ButterKnife.bind(this, rootView);
+        return rootView;
     }
 
     @Override
