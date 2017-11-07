@@ -26,7 +26,16 @@ public class MineFragment extends BaseFragment {
     WaveView wave_view;
     @BindView(R.id.tv_pause_wave)
     TextView tv_pause_wave;
+    @BindView(R.id.tv_jni_test)
+    TextView tv_jni_test;
+
     private boolean isRunning;
+
+    static {
+        System.loadLibrary("hello_jni");
+    }
+
+    public native String getFromUri();
 
     public static MineFragment newInstance() {
         return new MineFragment();
@@ -49,6 +58,11 @@ public class MineFragment extends BaseFragment {
                 isRunning = true;
                 tv_pause_wave.setText("暂停");
             }
+        });
+
+        tv_jni_test.setOnClickListener(v -> {
+            String fromUri = getFromUri();
+            tv_jni_test.setText(fromUri);
         });
     }
 

@@ -10,6 +10,16 @@
         android:layout_width="200dp"
         android:layout_height="20dp"/>
 
+    <TextView
+        android:id="@+id/tv_jni_test"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:text="jni"
+        android:layout_width="wrap_content"
+        android:minWidth="100dp"
+        android:layout_height="40dp"/>
+
     <com.sd.style.common.widget.WaveView
         android:id="@+id/wave_view"
         helei:duration="3000"
