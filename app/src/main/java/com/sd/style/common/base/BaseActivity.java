@@ -13,8 +13,6 @@ import com.orhanobut.logger.Logger;
 import com.sd.style.GlobalConstant;
 import com.sd.style.R;
 
-import butterknife.ButterKnife;
-
 /**
  * description: activity 基类
  */
@@ -26,7 +24,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         initScreenConfig();
-        initConfig();
         initView();
         bindData();
         initPresenter();
@@ -41,10 +38,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         Logger.e("base---height:" + height);
         GlobalConstant.screen.screenWidth = width;
         GlobalConstant.screen.screenHeight = height;
-    }
-
-    private void initConfig() {
-        ButterKnife.bind(this);
     }
 
     /**
