@@ -6,8 +6,11 @@ import android.support.v4.view.animation.LinearOutSlowInInterpolator
 import com.sd.style.R
 import com.sd.style.common.base.BaseFragment
 import com.sd.style.common.base.BasePresenter
+import com.sd.style.common.db.DatabaseManager
+import com.sd.style.common.db.run.RunDao
 import com.sd.style.common.uitls.UIUtils
 import kotlinx.android.synthetic.main.fragment_mine.*
+import java.lang.ref.SoftReference
 
 /**
  * Author: HeLei on 2017/10/24 00:23
@@ -64,6 +67,11 @@ class MineFragment : BaseFragment() {
         wave_view!!.setColor(R.color.theme_color)
         wave_view!!.start()
         isRunning = true
+
+        val databaseManager = DatabaseManager.getDefault()
+        databaseManager.operate()
+        val runDao = SoftReference<RunDao>(RunDao(mContext))
+        runDao.get()?.addPoint()
     }
 
     override fun initPresenter(): BasePresenter<*>? {

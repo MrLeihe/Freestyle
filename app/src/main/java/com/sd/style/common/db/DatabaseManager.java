@@ -1,4 +1,4 @@
-package com.sd.style.common.database;
+package com.sd.style.common.db;
 
 import android.database.Cursor;
 import android.database.SQLException;
@@ -43,7 +43,7 @@ public class DatabaseManager {
         }
     }
 
-    private void operate() {
+    public void operate() {
         SQLiteDatabase sqLiteDatabase = DatabaseManager.getDefault().getSQLiteDatabase();
         String sql = "insert into userInfo (id, name, age) values (3, 'guis', 33)";
         try {
@@ -55,14 +55,14 @@ public class DatabaseManager {
         }
     }
 
-    private void deleteById(int id){
+    public void deleteById(int id){
         SQLiteDatabase sqLiteDatabase = DatabaseManager.getDefault().getSQLiteDatabase();
         String sql = "delete from userInfo where id = " + id;
         sqLiteDatabase.execSQL(sql);
         sqLiteDatabase.close();
     }
 
-    private void updateByName(String name){
+    public void updateByName(String name){
         SQLiteDatabase sqLiteDatabase = DatabaseManager.getDefault().getSQLiteDatabase();
         String sql = "update userInfo set age = 22, name = 'magua' where name = " + name;
         sqLiteDatabase.execSQL(sql);
@@ -84,7 +84,7 @@ public class DatabaseManager {
         sqLiteDatabase.close();
     }
 
-    private void query(){
+    public void query(){
         SQLiteDatabase sqLiteDatabase = DatabaseManager.getDefault().getSQLiteDatabase();
         Cursor cursor = sqLiteDatabase.query("userInfo", new String[]{"id", "name", "age"}, "name like ? and id = ? and age = ?", new String[]{"magua", "2", "22"}, null, null, null);
         while (cursor.moveToNext()) {

@@ -1,4 +1,4 @@
-package com.sd.style.common.database;
+package com.sd.style.common.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
