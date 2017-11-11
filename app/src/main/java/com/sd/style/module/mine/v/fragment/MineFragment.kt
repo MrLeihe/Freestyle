@@ -7,6 +7,7 @@ import com.sd.style.R
 import com.sd.style.common.base.BaseFragment
 import com.sd.style.common.base.BasePresenter
 import com.sd.style.common.db.DatabaseManager
+import com.sd.style.common.db.bean.PointEntity
 import com.sd.style.common.db.run.RunDao
 import com.sd.style.common.uitls.UIUtils
 import kotlinx.android.synthetic.main.fragment_mine.*
@@ -55,6 +56,7 @@ class MineFragment : BaseFragment() {
         tv_jni_test!!.setOnClickListener { v ->
             val fromUri = fromUri
             tv_jni_test!!.text = fromUri
+
         }
     }
 
@@ -71,7 +73,9 @@ class MineFragment : BaseFragment() {
         val databaseManager = DatabaseManager.getDefault()
         databaseManager.operate()
         val runDao = SoftReference<RunDao>(RunDao(mContext))
-        runDao.get()?.addPoint()
+        val pointEntity = PointEntity(12.0, 23.0, 1000, "江西", "吉安", "永新")
+        runDao.get()?.addPoint(pointEntity)
+        runDao.get()?.deletePoint()
     }
 
     override fun initPresenter(): BasePresenter<*>? {

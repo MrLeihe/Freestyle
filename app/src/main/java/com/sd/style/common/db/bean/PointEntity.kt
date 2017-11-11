@@ -10,5 +10,10 @@ data class PointEntity(var lng : Double, var lat : Double, var time : Long,
 
     companion object {
         val LNG = "lng"
+        val LAT = "lat"
+        val TIME = "time"
+        val PROVINCE = "province"
+        val CITY = "city"
+        val AREA = "area"
     }
 }

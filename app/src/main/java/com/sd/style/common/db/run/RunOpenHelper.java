@@ -34,7 +34,7 @@ public class RunOpenHelper extends SQLiteOpenHelper {
 
     }
 
-    public String getTableName(){
+    public static String getTableName(){
         return TABLE_NAME;
     }
 }
