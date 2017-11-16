@@ -9,6 +9,7 @@ import com.sd.style.common.base.BasePresenter
 import com.sd.style.common.db.DatabaseManager
 import com.sd.style.common.db.bean.PointEntity
 import com.sd.style.common.db.run.RunDao
+import com.sd.style.common.socket.Client
 import com.sd.style.common.uitls.UIUtils
 import kotlinx.android.synthetic.main.fragment_mine.*
 import java.lang.ref.SoftReference
@@ -58,6 +59,10 @@ class MineFragment : BaseFragment() {
             tv_jni_test!!.text = fromUri
 
         }
+
+        btn_socket!!.setOnClickListener({v ->
+            Client.socketTest()
+        })
     }
 
     override fun bindData() {

@@ -1,5 +1,7 @@
 package com.sd.style.module
 
+import android.content.Context
+import android.content.Intent
 import android.view.View
 import com.sd.style.R
 import com.sd.style.common.base.BaseActivity
@@ -72,6 +74,13 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             homeFragment = HomeFragment.newInstance()
         }
         switchFragment(R.id.main_container, currentFragment, homeFragment)
+    }
+
+    companion object {
+        fun show(context: Context){
+            val intent = Intent(context, MainActivity::class.java)
+            context.startActivity(intent)
+        }
     }
 }
 

@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.READ_SMS"/>
     <!--指纹识别-->
     <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+    <!--监听开机广播的权限-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:name=".common.app.MyApplication"
@@ -26,6 +28,13 @@
             android:launchMode="standard"/>
 
         <service android:name=".common.service.MyService"/>
+
+        <!--监听开机广播-->
+        <receiver android:name=".common.receiver.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
