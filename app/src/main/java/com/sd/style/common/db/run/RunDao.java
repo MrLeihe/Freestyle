@@ -2,8 +2,10 @@ package com.sd.style.common.db.run;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.facebook.stetho.common.LogUtil;
 import com.sd.style.common.db.bean.PointEntity;
 
 /**
@@ -21,6 +23,7 @@ public class RunDao {
     private SQLiteDatabase getWritableDatabase(){
         return mRunOpenHelper.getWritableDatabase();
     }
+
     private SQLiteDatabase getReadableDatabase(){
         return mRunOpenHelper.getReadableDatabase();
     }
@@ -37,6 +40,7 @@ public class RunDao {
         contentValues.put(PointEntity.Companion.getPROVINCE(), entity.getProvince());
         contentValues.put(PointEntity.Companion.getCITY(), entity.getCity());
         contentValues.put(PointEntity.Companion.getAREA(), entity.getArea());
+        contentValues.put(PointEntity.Companion.getDISTANCE(), entity.getDistance());
         try{
             database.insert(RunOpenHelper.getTableName(), null, contentValues);
         }catch(Exception e){
@@ -49,9 +53,23 @@ public class RunDao {
     /**
      * 通过ID删除
      */
-    public void deletePoint(){
+    public void deletePoint(String[] whereArgs){
         SQLiteDatabase writableDatabase = getWritableDatabase();
-        writableDatabase.delete(RunOpenHelper.getTableName(), "_id=?", new String[]{"1"});
+        writableDatabase.delete(RunOpenHelper.getTableName(), "distance=?", whereArgs);
         writableDatabase.close();
+    }
+
+    public void queryPoint(String province){
+        SQLiteDatabase readableDatabase = getReadableDatabase();
+        String queryStr = "select * from " + RunOpenHelper.getTableName() + " where " + PointEntity.Companion.getPROVINCE() + " =?";
+        Cursor cursor = readableDatabase.rawQuery(queryStr, new String[]{province});
+        if(cursor != null) {
+            while (cursor.moveToNext()) {
+                String area = cursor.getString(cursor.getColumnIndex(PointEntity.Companion.getAREA()));
+                LogUtil.e("area---------------------->" + area);
+            }
+            cursor.close();
+        }
+        readableDatabase.close();
     }
 }

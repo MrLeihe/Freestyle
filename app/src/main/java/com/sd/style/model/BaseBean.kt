@@ -1,4 +1,4 @@
-package com.sd.style.module.model
+package com.sd.style.model
 
 /**
  * Author: HeLei on 2017/11/7 12:08

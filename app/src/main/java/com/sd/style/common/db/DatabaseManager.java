@@ -53,6 +53,7 @@ public class DatabaseManager {
         }finally {
             sqLiteDatabase.close();
         }
+
     }
 
     public void deleteById(int id){

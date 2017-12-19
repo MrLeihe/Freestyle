@@ -12,7 +12,7 @@ public class RunOpenHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "run";
     private static final String TABLE_NAME = "run_table";
-    private static final int VERSION = 1;
+    private static final int VERSION = 2;
 
     public RunOpenHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
@@ -25,13 +25,15 @@ public class RunOpenHelper extends SQLiteOpenHelper {
         stringBuffer.append("_id integer primary key autoincrement,");
         stringBuffer.append("lng double, lat double, time long,");
         stringBuffer.append("province varchar(20), city varchar(20), area varchar(20)");
-        stringBuffer.append(")");
+        stringBuffer.append(", distance varchar(20))");
         db.execSQL(stringBuffer.toString());
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if(oldVersion == 1) {
+            db.execSQL("alter table " + TABLE_NAME + " add column distance vachar(20)");
+        }
     }
 
     public static String getTableName(){

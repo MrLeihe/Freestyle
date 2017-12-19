@@ -6,10 +6,9 @@ import android.support.v4.view.animation.LinearOutSlowInInterpolator
 import com.sd.style.R
 import com.sd.style.common.base.BaseFragment
 import com.sd.style.common.base.BasePresenter
-import com.sd.style.common.db.DatabaseManager
 import com.sd.style.common.db.bean.PointEntity
 import com.sd.style.common.db.run.RunDao
-import com.sd.style.common.socket.Client
+import com.sd.style.common.uitls.ToastUtils
 import com.sd.style.common.uitls.UIUtils
 import kotlinx.android.synthetic.main.fragment_mine.*
 import java.lang.ref.SoftReference
@@ -57,13 +56,28 @@ class MineFragment : BaseFragment() {
         tv_jni_test!!.setOnClickListener { v ->
             val fromUri = fromUri
             tv_jni_test!!.text = fromUri
-
         }
 
-        btn_socket!!.setOnClickListener({v ->
-            Client.socketTest()
-        })
+        /**
+         * 添加数据到数据库
+         */
+        tv_add_data!!.setOnClickListener { v ->
+            ToastUtils.showLongToast("添加数据")
+            val pointEntity = PointEntity(12.0, 23.0, 1000,
+                    "江西", "吉安", "永新", "100m")
+            runDao?.addPoint(pointEntity)
+        }
+
+        /**
+         * 查询
+         */
+        tv_query_data!!.setOnClickListener { v ->
+            //runDao?.deletePoint(arrayOf("100m"))
+            runDao?.queryPoint("江西")
+        }
     }
+
+    private var runDao: RunDao? = null
 
     override fun bindData() {
         handler.sendEmptyMessage(0)
@@ -74,13 +88,8 @@ class MineFragment : BaseFragment() {
         wave_view!!.setColor(R.color.theme_color)
         wave_view!!.start()
         isRunning = true
-
-        val databaseManager = DatabaseManager.getDefault()
-        databaseManager.operate()
-        val runDao = SoftReference<RunDao>(RunDao(mContext))
-        val pointEntity = PointEntity(12.0, 23.0, 1000, "江西", "吉安", "永新")
-        runDao.get()?.addPoint(pointEntity)
-        runDao.get()?.deletePoint()
+        val sf = SoftReference<RunDao>(RunDao(mContext))
+        runDao = sf.get()
     }
 
     override fun initPresenter(): BasePresenter<*>? {

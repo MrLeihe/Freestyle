@@ -1,4 +1,4 @@
-package com.sd.style.module.model
+package com.sd.style.model
 
 import android.widget.Toast
 import com.sd.style.common.app.BaseApplication
