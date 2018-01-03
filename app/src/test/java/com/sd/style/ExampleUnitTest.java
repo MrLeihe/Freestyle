@@ -2,7 +2,7 @@ package com.sd.style;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -14,4 +14,13 @@ public class ExampleUnitTest {
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
     }
+
+    @Test
+    public void testSum(){
+        int a= 8;
+        int b= 6;
+        int sum = a * b;
+        assertEquals(48, sum);
+    }
+
 }
