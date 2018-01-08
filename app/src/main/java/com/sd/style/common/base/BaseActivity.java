@@ -1,21 +1,21 @@
 package com.sd.style.common.base;
 
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.view.View;
-import android.view.Window;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 import com.sd.style.GlobalConstant;
 import com.sd.style.R;
+import com.sd.style.common.uitls.StatusBarUtils;
 
 /**
  * description: activity 基类
@@ -31,6 +31,11 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         initView();
         bindData();
         initPresenter();
+        initTitleBar();
+    }
+
+    private void initTitleBar() {
+        StatusBarUtils.initState(getWindow());
     }
 
     private void initScreenConfig() {
@@ -138,19 +143,22 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     /**
-     * 沉浸式状态栏
+     * 重新设置标题栏高度
      */
-    protected void initState() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+    protected void changeTitleHeight() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.base_toolbar);
+        if (toolbar == null) {
+            return;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+            layoutParams.height = StatusBarUtils.getViewHeight(toolbar) + StatusBarUtils.getStatusHeight(getResources());
+            toolbar.setPadding(toolbar.getPaddingLeft(),
+                    StatusBarUtils.getStatusHeight(getResources()) + toolbar.getPaddingTop(),
+                    toolbar.getPaddingRight(),
+                    toolbar.getPaddingBottom());
+            toolbar.setLayoutParams(layoutParams);
         }
     }
+
 }

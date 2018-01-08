@@ -3,11 +3,13 @@ package com.sd.style.module
 import android.content.Context
 import android.content.Intent
 import android.view.View
+import com.facebook.stetho.common.LogUtil
 import com.sd.style.R
 import com.sd.style.common.base.BaseActivity
 import com.sd.style.common.base.BaseFragment
 import com.sd.style.common.base.BasePresenter
 import com.sd.style.common.uitls.ContextCompactUtils
+import com.sd.style.common.uitls.StatusBarUtils
 import com.sd.style.module.home.v.fragment.HomeFragment
 import com.sd.style.module.income.v.fragment.IncomeFragment
 import com.sd.style.module.market.v.fragment.MarketFragment
@@ -29,7 +31,8 @@ class MainActivity : BaseActivity(), View.OnClickListener {
     }
 
     override fun initView() {
-        initState()
+        val result = StatusBarUtils.FlymeSetStatusBarLightMode(window, true)
+        LogUtil.e("result----------->" + result)
         ll_switch_home!!.setOnClickListener(this)
         ll_switch_income!!.setOnClickListener(this)
         ll_switch_market!!.setOnClickListener(this)
