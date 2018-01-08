@@ -14,14 +14,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        ndk{
-            // 模块名称，即编译的.so文件名
-            moduleName "hello_jni"
-            //使用stl标准库
-            stl "stlport_static"
-            //加入Android的日志库
-            ldLibs "log"
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+                abiFilters 'armeabi', 'armeabi-v7a','x86'
+            }
         }
     }
 
@@ -39,7 +36,7 @@ android {
 
     buildTypes {
         release {
-            buildConfigField("boolean", "LOG_ON", "true");
+            buildConfigField("boolean", "LOG_ON", "true")
             //混淆
             minifyEnabled true
             //Zipalign优化
@@ -53,7 +50,7 @@ android {
         }
 
         debug {
-            buildConfigField("boolean", "LOG_ON", "true");
+            buildConfigField("boolean", "LOG_ON", "true")
             //签名
             signingConfig signingConfigs.relealse
         }
@@ -62,6 +59,12 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
     }
 
     sourceSets {

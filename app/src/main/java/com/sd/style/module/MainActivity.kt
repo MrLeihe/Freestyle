@@ -138,5 +138,6 @@ class MainActivity : BaseActivity(), View.OnClickListener {
             context.startActivity(intent)
         }
     }
+
 }
 

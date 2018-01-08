@@ -21,8 +21,7 @@ class MineFragment : BaseFragment() {
 
     private var isRunning: Boolean = false
 
-    val fromUri: String
-        external get
+    private val fromUri: String external get
 
     private var progress: Int = 0
     private val handler = object : Handler() {
@@ -114,7 +113,7 @@ class MineFragment : BaseFragment() {
     companion object {
 
         init {
-            System.loadLibrary("hello_jni")
+            System.loadLibrary("native-lib")
         }
 
         fun newInstance(): MineFragment {
